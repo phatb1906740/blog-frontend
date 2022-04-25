@@ -4,13 +4,13 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
                     <div class="post-preview" v-for="(article,index) in articles">
-                        <a href="post.html">
+                        <router-link :to="{ name: 'blog-detail', params: { id: article._id }, }">
                             <h2 class="post-title">{{ article.title }}</h2>
                             <h3 class="post-subtitle">{{ article.body }}</h3>
-                        </a>
+                        </router-link>
                         <p class="post-meta">
                             Posted by
-                            <a href="#!">Start Bootstrap</a>
+                            <a href="#!">{{ article.author }}</a>
                             on {{ formatDate(article.createAt) }}
                         </p>
                     <hr class="my-4" />

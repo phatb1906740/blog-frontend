@@ -19,5 +19,12 @@ class ArticleService {
     async delete(id) {
         return (await this.http.delete(`/article/${id}`)).data;
     }
+    async login(data) {
+        return (await this.http.post("/user/login", data)).data;
+    }
+
+    async signin(data) {
+        return (await this.http.post("/user/signin", data)).data;
+    }
 }
 export default new ArticleService();

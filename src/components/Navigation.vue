@@ -1,9 +1,3 @@
-<script>
-export default {
-    
-}
-</script>
-
 <template>
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
@@ -17,13 +11,25 @@ export default {
                     <li class="nav-item"><router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{ name: 'home-page', }">Home</router-link></li>
                     <li class="nav-item"><router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{ name: 'edit-page', }">Edit</router-link></li>
                     <li class="nav-item"><router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{ name: 'create-page', }">Create</router-link></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" @click.prevent="">My Name</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" @click.prevent="">Log Out</a></li>
+                    <li class="nav-item"><router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{ name: 'signin-page', }">Sign In</router-link></li>
+                    <li class="nav-item" v-if="$store.state.isLogin"><router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{ name: 'edit-page', }">{{ $store.state.user.userName }}</router-link></li>
+                    <li class="nav-item" v-if="!$store.state.isLogin"><router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{ name: 'login-page', }">Log In</router-link></li>
+                    <li class="nav-item" v-if="$store.state.isLogin"><router-link class="nav-link px-lg-3 py-3 py-lg-4" :to="{ name: 'home-page', }" @click="userLogout">Log Out</router-link></li>
                 </ul>
             </div>
         </div>
     </nav>
 </template>
+
+<script>
+import { mapActions } from 'vuex';
+
+export default {
+    methods: {
+        ...mapActions([ 'userLogout']),
+    },    
+}
+</script>
 
 <style>
 

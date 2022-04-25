@@ -49,12 +49,12 @@ export default {
         title: "",
         body: "",
         image: "",
+        author: this.$store.state.user.userName,
       },
     }
   },
   methods: {
     async createArticle() {
-      console.log('Submited');
       try {
         await ArticleService.create(this.article);
         this.$router.push('/');

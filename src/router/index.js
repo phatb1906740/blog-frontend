@@ -1,8 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
-import AboutUs from '../pages/AboutUs.vue';
-import Contact from '../pages/Contact.vue';
-import BlogDetail from '../pages/BlogDetail.vue';
+import store from '../store';
 
 const routes = [
     {
@@ -14,11 +12,25 @@ const routes = [
         path: '/edit',
         name: 'edit-page',
         component: () => import("../pages/EditPage.vue"),
+        beforeEnter: (to, from, next) => {
+            if(store.state.isLogin) {
+                next();
+            } else {
+                next({ path: '/login', query: { redirect: `${to.name}` } });
+            }
+        }
     },
     {
         path: '/create',
         name: 'create-page',
         component: () => import("../pages/CreatePage.vue"),
+        beforeEnter: (to, from, next) => {
+            if(store.state.isLogin) {
+                next();
+            } else {
+                next({ path: '/login', query: { redirect: `${to.name}` } });
+            }
+        }
     },
     {
         path: '/update/:id',
@@ -27,19 +39,25 @@ const routes = [
         props: true,
     },
     {
-        path: '/about-us',
-        name: 'about-us',
-        component: AboutUs,
+        path: '/login',
+        name: 'login-page',
+        component: () => import("../pages/LoginPage.vue"),
     },
     {
-        path: '/contact',
-        name: 'contact',
-        component: Contact,
+        path: '/signin',
+        name: 'signin-page',
+        component: () => import("../pages/SigninPage.vue"),
     },
     {
         path: '/blog-detail/:id',
         name: 'blog-detail',
-        component: BlogDetail,
+        component: () => import("../pages/BlogDetail.vue"),
+        props: true,
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import("../pages/PageNotFound.vue"),
     },
 ];
 

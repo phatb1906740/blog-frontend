@@ -25,6 +25,12 @@
               </div>
 
               <br />
+
+              <div v-if="isSuccess">
+                <div class="text-center text-primary mb-3">
+                  <div class="fw-bolder">Article was updated successfully!</div>
+                </div>
+              </div>
               
               <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Update</button>
             </form>
@@ -52,14 +58,16 @@ export default {
         title: "",
         body: "",
         image: "",
+        author: this.$store.state.user.userName
       },
+      isSuccess: false,
     }
   },
   methods: {
     async updateArticle() {
       try {
           await ArticleService.update(this.id, this.article);
-          this.$router.push('/');
+          this.isSuccess = true;
       } catch (error) {
           console.log(error);
       }

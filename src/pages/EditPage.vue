@@ -3,7 +3,7 @@
   <div class="container mt-4">
     <div>
       <h3>Bài viết của tôi</h3>
-      <a href="#">Thùng rác</a>
+      <a class="text-primary" href="#">Thùng rác</a>
     </div>
 
     <table class="table mt-4">
@@ -22,18 +22,15 @@
             <td class="align-middle" style="padding-top: 12px"><span class="article-body-table">{{ article.body }}</span></td>
             <td class="align-middle">{{ formatDate(article.updateAt) }}</td>
             <td>
-                <router-link
-                    class="btn btn-link"
-                    :to="{
-                    name: 'update-page',
-                    params: { id: article._id },
-                    }"
-                >
+                <router-link class="btn btn-link fw-bolder text-primary" :to="{ name: 'update-page', params: { id: article._id }, }">
                 Sửa
                 </router-link>
             </td>
             <td>
-                <a href="" class="btn btn-link" @click="deleteArticle(article._id)">Xóa</a>
+                <!-- <a href="" class="btn btn-link" @click="deleteArticle(article._id)">Xóa</a> -->
+                <router-link class="btn btn-link fw-bolder text-danger" :to="{ name: 'edit-page' }" @click="deleteArticle(article._id)">
+                Xóa
+                </router-link>
             </td>
           </tr>
         </tbody>
@@ -71,17 +68,17 @@ export default {
     async deleteArticle(id) {
         try {
             await ArticleService.delete(id);
-            this.refreshTable();
+            this.refreshPage();
         } catch (error) {
             console.log(error);
         }
     },
-    refreshTable() {
-        this.retrieveArticles();
+    async refreshPage() {
+      this.retrieveArticles();
     },
   },
   mounted() {
-    this.refreshTable();
+    this.retrieveArticles();
   },
 }
 </script>
